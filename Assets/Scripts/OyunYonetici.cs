@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // UI elemanları için (İleride kullanılacak)
+using TMPro;
 using System.Collections; // Zamanlayıcı ve gecikmeler için
 
 public class OyunYonetici : MonoBehaviour
@@ -10,11 +11,8 @@ public class OyunYonetici : MonoBehaviour
 
     public List<Kart> oyuncuEli = new List<Kart>();
     public List<Kart> aiEli = new List<Kart>();
-
-    // --- YENİ DEĞİŞKENLER ---
     public int oyuncuCan = 30;
     public int aiCan = 30;
-
     private int turSayaci = 0;
     private bool oyuncuBaslar = true; // Başlangıçta oyuncu başlar
 
@@ -38,8 +36,6 @@ public class OyunYonetici : MonoBehaviour
     // public Text zamanlayiciText;
     // public GameObject oyuncuKartAlani;
     // public GameObject aiKartAlani;
-
-    // --- /YENİ DEĞİŞKENLER ---
 
     void Start() // Oyun başladığında çalışır (Awake'den sonra)
     {
@@ -186,8 +182,6 @@ public class OyunYonetici : MonoBehaviour
         AIHamlesiYap();
     }
 
-    // ... (Önceki kodlar) ...
-
     // UI butonları veya test tuşları bu fonksiyonu çağıracak
     public void OyuncuKartOyna(int kartIndex)
     {
@@ -262,8 +256,6 @@ public class OyunYonetici : MonoBehaviour
             StartCoroutine(SavasBaslat());
         }
     }
-    
-    // ... (Önceki kodlar) ...
 
     IEnumerator SavasBaslat()
     {
