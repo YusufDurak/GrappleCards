@@ -7,22 +7,25 @@ public class Kart
     public string Isim;
     public Nadirlik NadirlikSeviyesi;
     public int Atk;
-    public int C_Atk;
-    public int Savunma; // 'def' C#'da anahtar kelime olabileceğinden 'Savunma' kullandık.
+    public int Savunma;
+    public OzelGucTipi OzelGuc;
+    public int OzelGucDegeri;
 
     // Yapıcı Metot (Constructor) - Kod içinden kart oluşturmak için.
-    public Kart(string isim, Nadirlik nadirlik, int atk, int c_atk, int savunma)
+public Kart(string isim, Nadirlik nadirlik, int atk, int savunma, OzelGucTipi guc = OzelGucTipi.Yok, int gucDegeri = 0)
     {
         this.Isim = isim;
         this.NadirlikSeviyesi = nadirlik;
         this.Atk = atk;
-        this.C_Atk = c_atk;
         this.Savunma = savunma;
+        this.OzelGuc = guc; // Parametreden gelen 'guc' kullanıldı.
+        this.OzelGucDegeri = gucDegeri; // Parametreden gelen 'gucDegeri' kullanıldı.
     }
 
     // Kart bilgilerini kolayca yazdırmak için ToString() metodunu override ediyoruz.
     public override string ToString()
     {
-        return $"{Isim} ({NadirlikSeviyesi}) [ATK:{Atk} C-ATK:{C_Atk} DEF:{Savunma}]";
+        string gucStr = (OzelGuc != OzelGucTipi.Yok) ? $" GÜÇ:{OzelGuc}({OzelGucDegeri})" : "";
+        return $"{Isim} ({NadirlikSeviyesi}) [ATK:{Atk} DEF:{Savunma}{gucStr}]";
     }
 }

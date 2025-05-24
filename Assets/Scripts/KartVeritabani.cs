@@ -21,23 +21,24 @@ public class KartVeritabani : MonoBehaviour
 
     void Doldur()
     {
-        anaKartHavuzu.Add(new Kart("Sıradan Asker", Nadirlik.CokYaygin, 2, 1, 1));
-        anaKartHavuzu.Add(new Kart("Tahta Kalkan", Nadirlik.CokYaygin, 1, 0, 3));
-        anaKartHavuzu.Add(new Kart("Sinsi Hançer", Nadirlik.CokYaygin, 3, 0, 1));
-        anaKartHavuzu.Add(new Kart("Acemi Büyücü", Nadirlik.CokYaygin, 2, 2, 0));
-        anaKartHavuzu.Add(new Kart("Kaya Fırlatıcı", Nadirlik.CokYaygin, 2, 1, 2));
+        anaKartHavuzu.Clear(); // Önce temizle
 
-        anaKartHavuzu.Add(new Kart("Demir Zırhlı", Nadirlik.Yaygin, 3, 1, 5));
-        anaKartHavuzu.Add(new Kart("Savaşçı Kılıcı", Nadirlik.Yaygin, 5, 2, 2));
-        anaKartHavuzu.Add(new Kart("Parazit Vuruşu", Nadirlik.Yaygin, 4, 4, 1));
-        anaKartHavuzu.Add(new Kart("Şifacı Keşiş", Nadirlik.Yaygin, 1, 3, 4));
-        anaKartHavuzu.Add(new Kart("Ork Baltacısı", Nadirlik.Yaygin, 6, 1, 2));
+        // Çok Yaygın
+        anaKartHavuzu.Add(new Kart("Sıradan Asker", Nadirlik.CokYaygin, 3, 2)); // ATK:3, DEF:2, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Tahta Kalkan", Nadirlik.CokYaygin, 1, 4)); // ATK:1, DEF:4, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Küçük İksir", Nadirlik.CokYaygin, 0, 1, OzelGucTipi.CanYenile, 3)); // ATK:0, DEF:1, Güç: 3 Can Yenile
 
-        anaKartHavuzu.Add(new Kart("Dev Kalkanı", Nadirlik.Nadir, 2, 3, 8));
-        anaKartHavuzu.Add(new Kart("Ejderha Nefesi", Nadirlik.Nadir, 8, 2, 3));
-        anaKartHavuzu.Add(new Kart("Ayna Büyüsü", Nadirlik.Nadir, 3, 8, 2));
-        anaKartHavuzu.Add(new Kart("Efsanevi Savaşçı", Nadirlik.Nadir, 6, 5, 6));
-        anaKartHavuzu.Add(new Kart("Kara Şövalye", Nadirlik.Nadir, 7, 4, 5));
+        // Yaygın
+        anaKartHavuzu.Add(new Kart("Demir Zırhlı", Nadirlik.Yaygin, 4, 6)); // ATK:4, DEF:6, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Savaşçı Kılıcı", Nadirlik.Yaygin, 6, 3)); // ATK:6, DEF:3, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Ateş Topu", Nadirlik.Yaygin, 2, 2, OzelGucTipi.DirektHasar, 4)); // ATK:2, DEF:2, Güç: 4 Direkt Hasar
+
+        // Nadir
+        anaKartHavuzu.Add(new Kart("Dev Kalkanı", Nadirlik.Nadir, 3, 9)); // ATK:3, DEF:9, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Ejderha Nefesi", Nadirlik.Nadir, 9, 4)); // ATK:9, DEF:4, Güç: Yok
+        anaKartHavuzu.Add(new Kart("Kutsal Işık", Nadirlik.Nadir, 1, 3, OzelGucTipi.CanYenile, 8)); // ATK:1, DEF:3, Güç: 8 Can Yenile
+        anaKartHavuzu.Add(new Kart("Büyü Kitabı", Nadirlik.Nadir, 2, 2, OzelGucTipi.KartCek, 1)); // ATK:2, DEF:2, Güç: 1 Kart Çek
+
 
         Debug.Log("Kart Veritabanı Dolduruldu!");
     }

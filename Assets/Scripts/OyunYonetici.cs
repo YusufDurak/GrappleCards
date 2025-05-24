@@ -1,36 +1,35 @@
 // OyunYonetici.cs
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // UI elemanları için (İleride kullanılacak)
+using UnityEngine.UI; // Slider için gerekli
 using TMPro;
-using System.Collections; // Zamanlayıcı ve gecikmeler için
+using System.Collections;
+// using UnityEngine.EventSystems; // Bu script'te doğrudan gerekmiyor ama UI çalışması için sahnede olmalı.
 
 public class OyunYonetici : MonoBehaviour
 {
-    public KartVeritabani kartVeritabani; // Inspector'dan sürükleyip bırakın
+    public KartVeritabani kartVeritabani;
 
     public List<Kart> oyuncuEli = new List<Kart>();
     public List<Kart> aiEli = new List<Kart>();
+
     public int oyuncuCan = 30;
     public int aiCan = 30;
-    private int maxCan = 30; // Max canı bilmek slider için iyi olur
-    private int turSayaci = 0;
-    private bool oyuncuBaslar = true; // Başlangıçta oyuncu başlar
+    private int maxCan = 30;
 
-    // Oynanan kartları tutacak alanlar
+    private int turSayaci = 0;
+    private bool oyuncuBaslar = true;
+
     public Kart oyuncuOynananKart;
     public Kart aiOynananKart;
 
-    // Oyun durumunu yönetmek için enum
-    public enum OyunDurumu { Hazirlik, OyuncuSirasi, OyuncuOynadi, AISirasi, Savas, Bitis }
+    public enum OyunDurumu { Hazirlik, KartSecimi, OyuncuSirasi, OyuncuOynadi, AISirasi, Savas, Bitis }
     public OyunDurumu mevcutDurum;
 
-    // Oyuncu zamanlayıcısı
     public float turSuresi = 20.0f;
     private float mevcutSure;
     private bool zamanlayiciAktif = false;
 
-    // --- YENİ UI REFERANSLARI ---
     [Header("UI Referansları")]
     public TextMeshProUGUI oyuncuCanText;
     public Slider oyuncuCanSlider;
@@ -43,15 +42,18 @@ public class OyunYonetici : MonoBehaviour
     [Header("Alan Referansları")]
     public Transform oyuncuElAlani;
     public Transform aiElAlani;
-    public KartUI oyuncuSavasSlotu; // Savaş alanındaki kartı göstermek için
-    public KartUI aiSavasSlotu;     // Savaş alanındaki kartı göstermek için
-    public GameObject kartPrefab;   // Oluşturduğumuz KartUI Prefab'ı
-    public GameObject kartArkasiPrefab; // AI kartları için basit bir prefab
+    public KartUI oyuncuSavasSlotu;
+    public KartUI aiSavasSlotu;
+    public GameObject kartPrefab;
+    public GameObject kartArkasiPrefab;
 
+    [Header("Seçim Paneli")]
+    public GameObject secimPaneli;
+    public KartUI[] secimKartSlotlari = new KartUI[3];
+    private List<Kart> secimIcinKartlar = new List<Kart>();
 
-    void Start() // Oyun başladığında çalışır (Awake'den sonra)
+    void Start()
     {
-        // KartVeritabani'nı bul (eğer atanmadıysa)
         if (kartVeritabani == null)
         {
             kartVeritabani = FindObjectOfType<KartVeritabani>();
@@ -69,7 +71,6 @@ public class OyunYonetici : MonoBehaviour
 
     void OyunuBaslat()
     {
-
         Debug.Log("Oyun Başlıyor...");
         mevcutDurum = OyunDurumu.Hazirlik;
         oyuncuCan = 30;
@@ -77,50 +78,49 @@ public class OyunYonetici : MonoBehaviour
         turSayaci = 0;
         oyuncuBaslar = true;
 
-        // Başlangıç ellerini temizle ve dağıt
         oyuncuEli.Clear();
         aiEli.Clear();
-        KartCek(oyuncuEli, 4);
-        KartCek(aiEli, 4);
-        UpdateTumUI(); // Başlangıçta tüm UI'ı güncelle
 
-        Debug.Log("--- Oyuncunun Başlangıç Eli ---");
-        foreach (Kart kart in oyuncuEli)
-        {
-            Debug.Log(kart.ToString());
-        }
-
-        Debug.Log("--- AI'nın Başlangıç Eli ---");
-        foreach (Kart kart in aiEli)
-        {
-            Debug.Log(kart.ToString());
-        }
-
-        // İlk turu başlat
-        StartCoroutine(YeniTurBaslat());
-
+        // Başlangıçta AI için 4 kart çek (Oyuncu seçerek alacak)
+        KartCekAI(4); // Sadece AI için kart çeken yeni fonksiyon
+        // Oyuncu için başlangıçta 4 kart seçtir
+        OyuncuBaslangicKartSeciminiBaslat(4); // Oyuncuya başlangıçta 4 kart seçtiren fonksiyon
     }
 
-    // Belirtilen ele kart çeken fonksiyon
-    public void KartCek(List<Kart> el, int adet)
+    // AI için kart çeken basit fonksiyon
+    void KartCekAI(int adet)
     {
         for (int i = 0; i < adet; i++)
         {
-            Kart cekilenKart = kartVeritabani.RastgeleKartCek();
-            if (cekilenKart != null)
-            {
-                el.Add(cekilenKart);
-            }
+             Kart cekilenKart = kartVeritabani.RastgeleKartCek();
+             if (cekilenKart != null) aiEli.Add(cekilenKart);
         }
     }
 
+    // Oyuncunun başlangıçta veya tur başında kart seçmesini yönetir.
+    // Başlangıçta 4, tur başında 1 kart seçer.
+    void OyuncuBaslangicKartSeciminiBaslat(int kartSayisi)
+    {
+        // Bu fonksiyon şimdilik sadece 1 kart seçtiriyor,
+        // başlangıçta 4 kart seçtirme daha karmaşık bir UI gerektirebilir.
+        // Şimdilik başlangıçta da 1 seçtirip 4'e tamamlayalım veya direkt 4 verelim.
+        // En kolayı: Başlangıçta 4 kartı direkt verelim, tur başında 1 seçtirelim.
+        Debug.Log("Başlangıç kartları oyuncuya veriliyor (şimdilik rastgele).");
+        oyuncuEli.Clear();
+        for(int i = 0; i < 4; i++) {
+            oyuncuEli.Add(kartVeritabani.RastgeleKartCek());
+        }
+        UpdateTumUI();
+        StartCoroutine(YeniTurBaslat()); // Direkt ilk turu başlat
+    }
+
+
     void Update()
     {
-        // Zamanlayıcıyı sadece oyuncu sırasındayken çalıştır
         if (mevcutDurum == OyunDurumu.OyuncuSirasi && zamanlayiciAktif)
         {
             mevcutSure -= Time.deltaTime;
-            zamanlayiciText.text = Mathf.CeilToInt(mevcutSure).ToString(); // UI Güncellemesi
+            zamanlayiciText.text = Mathf.CeilToInt(mevcutSure).ToString();
 
             if (mevcutSure <= 0)
             {
@@ -129,51 +129,89 @@ public class OyunYonetici : MonoBehaviour
                 OyuncuRastgeleKartOyna();
             }
         }
-
-        // --- TEST İÇİN KLAVYE GİRİŞİ ---
-        // UI olmadığında test etmek için 1-5 arası tuşlara basarak kart oynama
-        /* if (mevcutDurum == OyunDurumu.OyuncuSirasi)
-         {
-             if (Input.GetKeyDown(KeyCode.Alpha1)) OyuncuKartOyna(0);
-             if (Input.GetKeyDown(KeyCode.Alpha2)) OyuncuKartOyna(1);
-             if (Input.GetKeyDown(KeyCode.Alpha3)) OyuncuKartOyna(2);
-             if (Input.GetKeyDown(KeyCode.Alpha4)) OyuncuKartOyna(3);
-             if (Input.GetKeyDown(KeyCode.Alpha5)) OyuncuKartOyna(4);
-         }
-         // --- /TEST İÇİN KLAVYE GİRİŞİ --- */
     }
 
     IEnumerator YeniTurBaslat()
     {
+        // Eğer oyun bittiyse yeni tur başlatma
+        if(mevcutDurum == OyunDurumu.Bitis) yield break;
+
         mevcutDurum = OyunDurumu.Hazirlik;
         turSayaci++;
         Debug.Log($"--- TUR {turSayaci} BAŞLIYOR ---");
 
         oyuncuOynananKart = null;
         aiOynananKart = null;
+        UpdateSavasAlaniUI();
 
-        UpdateSavasAlaniUI(); // Savaş alanını temizle
-
-        // 5 turda bir başlangıç sırasını değiştir
         if ((turSayaci - 1) % 5 == 0 && turSayaci > 1)
         {
             oyuncuBaslar = !oyuncuBaslar;
             Debug.Log($"Başlangıç sırası değişti! Şimdi {(oyuncuBaslar ? "Oyuncu" : "AI")} başlıyor.");
         }
 
-        // Herkes 1 kart çeker (Elde 5 kart olacak)
-        KartCek(oyuncuEli, 1);
-        KartCek(aiEli, 1);
-        UpdateTumUI(); // Kartları ve tur bilgisini güncelle
-        Debug.Log("Kartlar çekildi.");
-        EliGoster(oyuncuEli, "Oyuncu"); // Elleri konsola yazdır (Test için)
-        // EliGoster(aiEli, "AI"); // AI elini normalde göstermeyiz.
+        // AI kartını her zaman çeker
+        KartCekAI(1);
+        Debug.Log("AI kart çekti.");
+        UpdateElUI(); // AI el sayısını güncellemek için
 
-        yield return new WaitForSeconds(1.0f); // Kısa bir bekleme
+        Debug.Log("Oyuncu kart seçme aşaması başlıyor...");
+        OyuncuKartSeciminiBaslat(); // Oyuncu 3 karttan 1'ini seçecek
 
-        if (oyuncuBaslar) OyuncuSirasiniBaslat();
-        else StartCoroutine(AISirasiniBaslat());
+        // Akış KartSecildi fonksiyonundan devam edecek.
+        yield return null;
+    }
 
+    void OyuncuKartSeciminiBaslat()
+    {
+        mevcutDurum = OyunDurumu.KartSecimi;
+        durumText.text = "3 Karttan Birini Seç!";
+        secimIcinKartlar.Clear();
+
+        for (int i = 0; i < 3; i++)
+        {
+            secimIcinKartlar.Add(kartVeritabani.RastgeleKartCek());
+        }
+
+        secimPaneli.SetActive(true);
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < secimIcinKartlar.Count && secimKartSlotlari[i] != null)
+            {
+                secimKartSlotlari[i].gameObject.SetActive(true);
+                secimKartSlotlari[i].SecimKartBilgileriniAyarla(secimIcinKartlar[i], this);
+                secimKartSlotlari[i].SetInteractable(true); // <-- DEĞİŞTİ
+            }
+            else if (secimKartSlotlari[i] != null)
+            {
+                secimKartSlotlari[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void KartSecildi(Kart secilenKart)
+    {
+        if (mevcutDurum != OyunDurumu.KartSecimi) return;
+
+        oyuncuEli.Add(secilenKart);
+        Debug.Log($"Oyuncu seçti: {secilenKart.Isim}");
+
+        secimPaneli.SetActive(false);
+        UpdateTumUI();
+
+        // Tur sırasına göre devam et
+        if (oyuncuBaslar)
+        {
+            OyuncuSirasiniBaslat();
+        }
+        else
+        {
+            // Eğer AI başladıysa ve oyuncu şimdi kart seçtiyse,
+            // AI zaten oynamış olmalı. Bu akış gözden geçirilmeli.
+            // Şimdiki akış: Her tur başında AI çeker, sonra oyuncu seçer.
+            // Sonra kim başlıyorsa o oynar.
+            StartCoroutine(AISirasiniBaslat());
+        }
     }
 
     void OyuncuSirasiniBaslat()
@@ -183,8 +221,7 @@ public class OyunYonetici : MonoBehaviour
         mevcutSure = turSuresi;
         zamanlayiciAktif = true;
         durumText.text = "Sıra Sende! Kartını Seç.";
-        UpdateElUI(); // Butonları aktif etmek için eli güncelle
-
+        UpdateElUI(); // Kartları tıklanabilir yapmak için.
     }
 
     IEnumerator AISirasiniBaslat()
@@ -192,14 +229,13 @@ public class OyunYonetici : MonoBehaviour
         Debug.Log("Sıra Yapay Zekada.");
         mevcutDurum = OyunDurumu.AISirasi;
         durumText.text = "Rakip Düşünüyor...";
-        yield return new WaitForSeconds(1.5f); // AI'nın düşünme süresi simülasyonu
+        UpdateElUI(); // Oyuncu kartlarını tıklanamaz yapmak için.
+        yield return new WaitForSeconds(1.5f);
         AIHamlesiYap();
     }
 
-    // UI butonları veya test tuşları bu fonksiyonu çağıracak
     public void OyuncuKartOyna(int kartIndex)
     {
-        // Sadece oyuncu sırasındaysa ve geçerli bir index ise oyna
         if (mevcutDurum == OyunDurumu.OyuncuSirasi && kartIndex >= 0 && kartIndex < oyuncuEli.Count)
         {
             zamanlayiciAktif = false;
@@ -209,19 +245,12 @@ public class OyunYonetici : MonoBehaviour
 
             mevcutDurum = OyunDurumu.OyuncuOynadi;
             durumText.text = "Oyuncu Kart Oynadı.";
-            UpdateTumUI(); // Eli ve savaş alanını güncelle
+            UpdateTumUI();
 
             if (oyuncuBaslar) StartCoroutine(AISirasiniBaslat());
             else StartCoroutine(SavasBaslat());
         }
-        else if (mevcutDurum != OyunDurumu.OyuncuSirasi)
-        {
-            Debug.LogWarning("Şu an oyuncu sırası değil!");
-        }
-        else
-        {
-            Debug.LogWarning("Geçersiz kart indexi!");
-        }
+        // ... (Hata mesajları) ...
     }
 
     void OyuncuRastgeleKartOyna()
@@ -235,16 +264,22 @@ public class OyunYonetici : MonoBehaviour
 
     void AIHamlesiYap()
     {
-        if (aiEli.Count == 0) return; // Eli boşsa oynayamaz
+        if (aiEli.Count == 0)
+        {
+            Debug.LogWarning("AI'nın oynayacak kartı yok!");
+             // AI kart oynayamıyorsa ne olacak? Şimdilik sırayı oyuncuya verelim veya savaşı başlatalım.
+             // Eğer oyuncu başladıysa savaşı başlatalım (AI pas geçmiş gibi)
+             if (oyuncuBaslar) StartCoroutine(SavasBaslat());
+             else OyuncuSirasiniBaslat(); // Eğer AI başladıysa sıra oyuncuya geçer.
+             return;
+        }
 
         Kart enIyiKart = aiEli[0];
         int enYuksekStat = 0;
 
-        // En yüksek tekil stat'a sahip kartı bul
         foreach (Kart kart in aiEli)
         {
             if (kart.Atk > enYuksekStat) { enYuksekStat = kart.Atk; enIyiKart = kart; }
-            if (kart.C_Atk > enYuksekStat) { enYuksekStat = kart.C_Atk; enIyiKart = kart; }
             if (kart.Savunma > enYuksekStat) { enYuksekStat = kart.Savunma; enIyiKart = kart; }
         }
 
@@ -252,101 +287,63 @@ public class OyunYonetici : MonoBehaviour
         aiEli.Remove(enIyiKart);
         Debug.Log($"AI oynadı: {aiOynananKart}");
         durumText.text = "Rakip Kart Oynadı.";
-        UpdateTumUI(); // AI elini ve savaş alanını güncelle
+        UpdateTumUI();
 
         if (!oyuncuBaslar) OyuncuSirasiniBaslat();
         else StartCoroutine(SavasBaslat());
-
     }
 
     IEnumerator SavasBaslat()
     {
+       // Eğer bir taraf kart oynamadıysa (örneğin AI'nın kartı bitti)
+       // bunu burada ele almamız gerekebilir. Şimdilik ikisinin de oynadığını varsayıyoruz.
+       if(oyuncuOynananKart == null || aiOynananKart == null)
+       {
+           Debug.LogError("Savaş başlatılamadı, bir oyuncu kart oynamadı!");
+           StartCoroutine(YeniTurBaslat()); // Hata durumunda yeni tura geç.
+           yield break;
+       }
+
         mevcutDurum = OyunDurumu.Savas;
         durumText.text = $"{oyuncuOynananKart.Isim} vs {aiOynananKart.Isim}";
         Debug.Log("--- SAVAŞ BAŞLIYOR! ---");
-        Debug.Log($"{oyuncuOynananKart.Isim} vs {aiOynananKart.Isim}");
 
-        // Kartların savaş alanında göründüğünden emin ol (UpdateSavasAlaniUI çağrılmalı)
-        // UpdateSavasAlaniUI(); // Bu genellikle kartlar oynandığında zaten çağrılır.
+        yield return new WaitForSeconds(1.5f);
 
-        yield return new WaitForSeconds(1.5f); // Kartların çarpışması / animasyon için zaman
+        int ai_hasar = Mathf.Max(0, oyuncuOynananKart.Atk - aiOynananKart.Savunma);
+        int oyuncu_hasar = Mathf.Max(0, aiOynananKart.Atk - oyuncuOynananKart.Savunma);
 
-        // Formülleri uygula
-        int p_eff_atk = Mathf.Max(0, oyuncuOynananKart.Atk - aiOynananKart.C_Atk);
-        int ai_eff_atk = Mathf.Max(0, aiOynananKart.Atk - oyuncuOynananKart.C_Atk);
-
-        int ai_hasar = Mathf.Max(0, p_eff_atk - aiOynananKart.Savunma);
-        int oyuncu_hasar = Mathf.Max(0, ai_eff_atk - oyuncuOynananKart.Savunma);
-
-        Debug.Log("Hasarlar hesaplandı...");
         durumText.text = "Hasarlar Hesaplanıyor...";
+        yield return new WaitForSeconds(1.0f);
 
-        yield return new WaitForSeconds(1.0f); // Hesaplama efekti / beklemesi
-
-        // Hasarları uygula
         aiCan -= ai_hasar;
         oyuncuCan -= oyuncu_hasar;
 
-        // Hasarları UI'da göster (Basit Yöntem)
-        string hasarMetni = "";
-        if (ai_hasar > 0) hasarMetni += $"Rakip {ai_hasar} hasar aldı! ";
-        if (oyuncu_hasar > 0) hasarMetni += $" {oyuncu_hasar} hasar aldın!";
-        if (string.IsNullOrEmpty(hasarMetni)) hasarMetni = "Kimse hasar almadı!";
-
+        string hasarMetni = $"Rakip {ai_hasar} hasar aldı! {oyuncu_hasar} hasar aldın!";
         durumText.text = hasarMetni;
-        Debug.Log($"Oyuncu {ai_hasar} hasar verdi. AI Can: {aiCan}");
-        Debug.Log($"AI {oyuncu_hasar} hasar verdi. Oyuncu Can: {oyuncuCan}");
+        Debug.Log($"Oyuncu {ai_hasar} vurdu. AI Can: {aiCan} | AI {oyuncu_hasar} vurdu. Oyuncu Can: {oyuncuCan}");
 
-        // Can UI'ını güncelle
         UpdateCanUI();
-
-        // (İleri Seviye: Burada hasar sayılarını ekranda gösterme kodu olabilir)
-
-        yield return new WaitForSeconds(2.0f); // Oyuncunun sonucu görmesi için daha uzun bekleme
+        yield return new WaitForSeconds(2.0f);
 
         // Oyun sonu kontrolü
-        if (oyuncuCan <= 0 && aiCan <= 0)
+        if (oyuncuCan <= 0 || aiCan <= 0)
         {
-            Debug.Log("BERABERE!");
-            durumText.text = "Oyun Bitti: BERABERE!";
-            mevcutDurum = OyunDurumu.Bitis;
-            // (İleri Seviye: Oyun sonu ekranını açma kodu)
-        }
-        else if (aiCan <= 0)
-        {
-            Debug.Log("OYUNCU KAZANDI!");
-            durumText.text = "Oyun Bitti: KAZANDIN!";
-            mevcutDurum = OyunDurumu.Bitis;
-            // (İleri Seviye: Oyun sonu ekranını açma kodu)
-        }
-        else if (oyuncuCan <= 0)
-        {
-            Debug.Log("AI KAZANDI!");
-            durumText.text = "Oyun Bitti: KAYBETTİN!";
-            mevcutDurum = OyunDurumu.Bitis;
-            // (İleri Seviye: Oyun sonu ekranını açma kodu)
+             if (oyuncuCan <= 0 && aiCan <= 0) { durumText.text = "Oyun Bitti: BERABERE!"; }
+             else if (aiCan <= 0) { durumText.text = "Oyun Bitti: KAZANDIN!"; }
+             else { durumText.text = "Oyun Bitti: KAYBETTİN!"; }
+             mevcutDurum = OyunDurumu.Bitis;
+             // Burada oyun sonu panelini aktif edebiliriz.
         }
         else
         {
-            // Oyun bitmediyse yeni tura başla
             durumText.text = "Yeni Tur Başlıyor...";
-            yield return new WaitForSeconds(0.5f); // Yeni tur öncesi kısa bekleme
+            yield return new WaitForSeconds(0.5f);
             StartCoroutine(YeniTurBaslat());
         }
     }
-    // EliGoster fonksiyonu (Test için)
-    public void EliGoster(List<Kart> el, string kimin)
-    {
-        string elStr = "";
-        for (int i = 0; i < el.Count; i++)
-        {
-            elStr += $"[{i + 1}] {el[i].Isim}  ";
-        }
-        Debug.Log($"--- {kimin} Eli ({el.Count} Kart) --- \n {elStr}");
-    }
-    
 
-        void UpdateTumUI()
+    void UpdateTumUI()
     {
         UpdateCanUI();
         UpdateElUI();
@@ -356,26 +353,23 @@ public class OyunYonetici : MonoBehaviour
 
     void UpdateCanUI()
     {
-        if(oyuncuCanText != null) oyuncuCanText.text = $"CAN: {oyuncuCan}";
-        if(aiCanText != null) aiCanText.text = $"CAN: {aiCan}";
-        if(oyuncuCanSlider != null) oyuncuCanSlider.value = (float)oyuncuCan / maxCan;
-        if(aiCanSlider != null) aiCanSlider.value = (float)aiCan / maxCan;
+        if (oyuncuCanText != null) oyuncuCanText.text = $"CAN: {oyuncuCan}";
+        if (aiCanText != null) aiCanText.text = $"CAN: {aiCan}";
+        if (oyuncuCanSlider != null) oyuncuCanSlider.value = (float)Mathf.Max(0, oyuncuCan) / maxCan;
+        if (aiCanSlider != null) aiCanSlider.value = (float)Mathf.Max(0, aiCan) / maxCan;
     }
 
     void UpdateElUI()
     {
-        // Oyuncu Elini Temizle ve Yeniden Oluştur
         foreach (Transform child in oyuncuElAlani) { Destroy(child.gameObject); }
         for (int i = 0; i < oyuncuEli.Count; i++)
         {
             GameObject kartGO = Instantiate(kartPrefab, oyuncuElAlani);
             KartUI kartUI = kartGO.GetComponent<KartUI>();
             kartUI.KartBilgileriniAyarla(oyuncuEli[i], i, this);
-            // Kartların butonlarını sadece oyuncu sırasındayken aktif et
-            kartUI.kartButton.interactable = (mevcutDurum == OyunDurumu.OyuncuSirasi);
+            kartUI.SetInteractable(mevcutDurum == OyunDurumu.OyuncuSirasi); // <-- DEĞİŞTİ
         }
 
-        // AI Elini Temizle ve Yeniden Oluştur (Sadece Kart Arkası)
         foreach (Transform child in aiElAlani) { Destroy(child.gameObject); }
         for (int i = 0; i < aiEli.Count; i++)
         {
@@ -385,24 +379,22 @@ public class OyunYonetici : MonoBehaviour
 
     void UpdateSavasAlaniUI()
     {
-        // Oyuncu Slotu
         if (oyuncuOynananKart != null)
         {
             oyuncuSavasSlotu.gameObject.SetActive(true);
-            oyuncuSavasSlotu.KartBilgileriniAyarla(oyuncuOynananKart, -1, this); // -1: Oynanamaz
-            oyuncuSavasSlotu.kartButton.interactable = false;
+            oyuncuSavasSlotu.KartBilgileriniAyarla(oyuncuOynananKart, -1, this);
+            oyuncuSavasSlotu.SetInteractable(false); // <-- DEĞİŞTİ
         }
         else
         {
             oyuncuSavasSlotu.gameObject.SetActive(false);
         }
 
-        // AI Slotu
         if (aiOynananKart != null)
         {
             aiSavasSlotu.gameObject.SetActive(true);
-            aiSavasSlotu.KartBilgileriniAyarla(aiOynananKart, -1, this); // -1: Oynanamaz
-            aiSavasSlotu.kartButton.interactable = false;
+            aiSavasSlotu.KartBilgileriniAyarla(aiOynananKart, -1, this);
+            aiSavasSlotu.SetInteractable(false); // <-- DEĞİŞTİ
         }
         else
         {
@@ -410,13 +402,23 @@ public class OyunYonetici : MonoBehaviour
         }
     }
 
-     void UpdateTurUI()
-     {
-         if(turText != null) turText.text = $"TUR: {turSayaci}";
-         if(zamanlayiciText != null && mevcutDurum == OyunDurumu.OyuncuSirasi)
-            zamanlayiciText.gameObject.SetActive(true);
-         else if(zamanlayiciText != null)
-            zamanlayiciText.gameObject.SetActive(false);
-     }
+    void UpdateTurUI()
+    {
+        if (turText != null) turText.text = $"TUR: {turSayaci}";
+        if (zamanlayiciText != null)
+        {
+             zamanlayiciText.gameObject.SetActive(mevcutDurum == OyunDurumu.OyuncuSirasi);
+        }
+    }
 
+    // EliGoster fonksiyonu (Debug için)
+    public void EliGoster(List<Kart> el, string kimin)
+    {
+        string elStr = "";
+        for(int i = 0; i < el.Count; i++)
+        {
+            elStr += $"[{i+1}] {el[i].Isim}  ";
+        }
+         Debug.Log($"--- {kimin} Eli ({el.Count} Kart) --- \n {elStr}");
+    }
 }
