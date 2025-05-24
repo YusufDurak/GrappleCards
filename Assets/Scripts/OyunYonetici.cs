@@ -51,7 +51,8 @@ public class OyunYonetici : MonoBehaviour
 
     [Header("Alan Referansları")]
     public Transform oyuncuElAlani;
-    public Transform aiElAlani;
+
+    //public Transform aiElAlani;
     public KartUI oyuncuSavasSlotu;
     public KartUI aiSavasSlotu;
     public GameObject kartPrefab;
@@ -365,8 +366,8 @@ public class OyunYonetici : MonoBehaviour
             kartUI.SetInteractable(mevcutDurum == OyunDurumu.OyuncuSirasi);
         }
 
-        foreach (Transform child in aiElAlani) { Destroy(child.gameObject); }
-        for (int i = 0; i < aiEli.Count; i++)
+        //foreach (Transform child in aiElAlani) { Destroy(child.gameObject); }
+        //for (int i = 0; i < aiEli.Count; i++)
         {
             //Instantiate(kartArkasiPrefab, aiElAlani);
         }

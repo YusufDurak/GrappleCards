@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bf3561c7e3126b34285053490e4f3401
+guid: 6b712277bd1ee1d4c8e275dde0372596
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4946584923870199613
-    second: midemckdolu_0
+      213: -3989360918954827795
+    second: card front5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: midemckdolu_0
+      name: card front5_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 576
-        height: 324
+        width: 64
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c00a6948333a5bb0800000000000000
-      internalID: -4946584923870199613
+      spriteID: def1fd87161f2a8c0800000000000000
+      internalID: -3989360918954827795
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      midemckdolu_0: -4946584923870199613
+      card front5_0: -3989360918954827795
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

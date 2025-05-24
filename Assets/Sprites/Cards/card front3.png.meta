@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f0a86013ab352a3459610acb437f0468
+guid: 42aa3ccb43d1f7746ab4bd61d8c71f4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6444995698866863008
-    second: "kart\xF6rnk_0"
+      213: 9110155031604091991
+    second: card front3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "kart\xF6rnk_0"
+      name: card front3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 66
-        height: 99
+        width: 64
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ab31e9e079317950800000000000000
-      internalID: 6444995698866863008
+      spriteID: 75cdf7bcbb5cd6e70800000000000000
+      internalID: 9110155031604091991
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "kart\xF6rnk_0": 6444995698866863008
+      card front3_0: 9110155031604091991
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
