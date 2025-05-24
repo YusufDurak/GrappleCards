@@ -12,6 +12,7 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI atkText;
     public TextMeshProUGUI defText;
     public TextMeshProUGUI gucText;
+    
     public Image kartGrafik;      // İsteğe bağlı: Kartın ana görselini atayabilirsiniz.
     public Image raycastHedefi;   // ÖNEMLİ: Tıklamaları algılayacak Image. Inspector'da Raycast Target açık olmalı.
 
@@ -55,7 +56,8 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
         isimText.text = kart.Isim;
         atkText.text = $"ATK: {kart.Atk}";
         defText.text = $"DEF: {kart.Savunma}";
-        gucText.text = (kart.OzelGuc != OzelGucTipi.Yok) ? $"GÜÇ: {kart.OzelGuc}" : "";
+        gucText.text = (kart.OzelGuc != OzelGucTipi.Yok) ? $"GÜÇ: {kart.OzelGuc}" : ""; 
+        
 
         // Button ile ilgili satırlar KALDIRILDI.
         // Tıklanabilirliği başlangıçta true yapalım, Yönetici gerektiğinde değiştirir.

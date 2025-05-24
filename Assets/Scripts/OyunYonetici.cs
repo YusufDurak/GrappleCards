@@ -55,7 +55,7 @@ public class OyunYonetici : MonoBehaviour
     public KartUI oyuncuSavasSlotu;
     public KartUI aiSavasSlotu;
     public GameObject kartPrefab;
-    public GameObject kartArkasiPrefab;
+    //public GameObject kartArkasiPrefab;
 
     [Header("Seçim Paneli")]
     public GameObject secimPaneli;
@@ -75,10 +75,10 @@ public class OyunYonetici : MonoBehaviour
     void Start()
     {
         if (kartVeritabani == null)
-            kartVeritabani = FindObjectOfType<KartVeritabani>();
+            kartVeritabani = Object.FindAnyObjectByType<KartVeritabani>();
 
         if (ozelGucYonetici == null)
-            ozelGucYonetici = FindObjectOfType<OzelGucYonetici>();
+            ozelGucYonetici = Object.FindAnyObjectByType<OzelGucYonetici>();
 
         if (kartVeritabani != null && ozelGucYonetici != null)
         {
@@ -368,7 +368,7 @@ public class OyunYonetici : MonoBehaviour
         foreach (Transform child in aiElAlani) { Destroy(child.gameObject); }
         for (int i = 0; i < aiEli.Count; i++)
         {
-            Instantiate(kartArkasiPrefab, aiElAlani);
+            //Instantiate(kartArkasiPrefab, aiElAlani);
         }
     }
 
