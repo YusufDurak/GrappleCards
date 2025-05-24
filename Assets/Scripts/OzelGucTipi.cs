@@ -5,7 +5,9 @@ public enum OzelGucTipi
     CanYenile,     // Oynandığında kendi canını yeniler
     DirektHasar,   // Oynandığında rakibe direkt hasar verir (savunmayı geçer)
     KalkanGucu,    // Oynandığında bir sonraki tur ekstra savunma sağlar
-    KartCek,       // Oynandığında ekstra kart çektirir
-    AtakGucu       // Oynandığında bir sonraki tur ekstra saldırı sağlar
+    Yansit,        // Oynandığında hasarı karşıya yansıtır
+    DesteDegisim,  // Oynandığında rakip ile oyuncu destesi değişir
+    AtakGucu,      // Oynandığında 1 tur ekstra saldırı sağlar
+    
     // Gelecekte daha fazla güç eklenebilir...
 }

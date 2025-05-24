@@ -37,7 +37,7 @@ public class KartVeritabani : MonoBehaviour
         anaKartHavuzu.Add(new Kart("Dev Kalkanı", Nadirlik.Nadir, 3, 9)); // ATK:3, DEF:9, Güç: Yok
         anaKartHavuzu.Add(new Kart("Ejderha Nefesi", Nadirlik.Nadir, 9, 4)); // ATK:9, DEF:4, Güç: Yok
         anaKartHavuzu.Add(new Kart("Kutsal Işık", Nadirlik.Nadir, 1, 3, OzelGucTipi.CanYenile, 8)); // ATK:1, DEF:3, Güç: 8 Can Yenile
-        anaKartHavuzu.Add(new Kart("Büyü Kitabı", Nadirlik.Nadir, 2, 2, OzelGucTipi.KartCek, 1)); // ATK:2, DEF:2, Güç: 1 Kart Çek
+        anaKartHavuzu.Add(new Kart("Büyü Kitabı", Nadirlik.Nadir, 2, 2, OzelGucTipi.Yok, 1)); // ATK:2, DEF:2, Güç: 1 Kart Çek
 
 
         Debug.Log("Kart Veritabanı Dolduruldu!");
