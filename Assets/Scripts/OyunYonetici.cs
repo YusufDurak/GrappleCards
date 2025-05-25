@@ -51,12 +51,10 @@ public class OyunYonetici : MonoBehaviour
 
     [Header("Alan Referansları")]
     public Transform oyuncuElAlani;
-
-    //public Transform aiElAlani;
     public KartUI oyuncuSavasSlotu;
     public KartUI aiSavasSlotu;
     public GameObject kartPrefab;
-    //public GameObject kartArkasiPrefab;
+    
 
     [Header("Seçim Paneli")]
     public GameObject secimPaneli;
@@ -357,19 +355,23 @@ public class OyunYonetici : MonoBehaviour
 
     void UpdateElUI()
     {
+        // Oyuncu Elini Temizle ve Yeniden Oluştur
         foreach (Transform child in oyuncuElAlani) { Destroy(child.gameObject); }
         for (int i = 0; i < oyuncuEli.Count; i++)
         {
             GameObject kartGO = Instantiate(kartPrefab, oyuncuElAlani);
             KartUI kartUI = kartGO.GetComponent<KartUI>();
-            kartUI.KartBilgileriniAyarla(oyuncuEli[i], i, this);
-            kartUI.SetInteractable(mevcutDurum == OyunDurumu.OyuncuSirasi);
-        }
 
-        //foreach (Transform child in aiElAlani) { Destroy(child.gameObject); }
-        //for (int i = 0; i < aiEli.Count; i++)
-        {
-            //Instantiate(kartArkasiPrefab, aiElAlani);
+            if (kartUI != null && oyuncuEli[i] != null)
+            {
+                kartUI.KartBilgileriniAyarla(oyuncuEli[i], i, this);
+                kartUI.SetInteractable(mevcutDurum == OyunDurumu.OyuncuSirasi);
+            }
+            else
+            {
+                Debug.LogError($"UpdateElUI: Oyuncu için kartUI veya oyuncuEli[{i}] null! Kart oluşturulamadı. Index: {i}");
+                if(kartGO != null) Destroy(kartGO);
+            }
         }
     }
 
