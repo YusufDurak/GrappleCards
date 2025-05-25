@@ -389,7 +389,7 @@ public class OyunYonetici : MonoBehaviour
             aiSavasSlotu.KartBilgileriniAyarla(aiOynananKart, -1, this);
             aiSavasSlotu.SetInteractable(false);
         }
-        else { aiSavasSlotu.gameObject.SetActive(false); }
+       // else { aiSavasSlotu.gameObject.SetActive(false); }
     }
 
     void UpdateTurUI()

@@ -21,11 +21,22 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
     private bool _secimModu = false;
     private bool _interactable = true;
 
+
     // ... (KartBilgileriniAyarla ve SecimKartBilgileriniAyarla) ...
+
+
+    void Start()
+    {
+       
+        _kartVerisi = gameObject.GetComponent<Kart>();
+    }
+
     public void KartBilgileriniAyarla(Kart kart, int index, OyunYonetici yonetici)
     { _secimModu = false; Ayarla(kart, index, yonetici); }
     public void SecimKartBilgileriniAyarla(Kart kart, OyunYonetici yonetici)
     { _secimModu = true; Ayarla(kart, -1, yonetici); }
+
+
 
 
     private void Ayarla(Kart kart, int index, OyunYonetici yonetici)
@@ -49,7 +60,7 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
             kartResmi.sprite = kart.Gorsel;
             kartResmi.color = Color.white; // Görünür yap
         }
-        else if(kartResmi != null)
+        else if (kartResmi != null)
         {
             // Eğer görsel atanmamışsa, boş veya varsayılan bir sprite ata
             // veya Image'ı gizle/şeffaf yap.

@@ -685,6 +685,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 7d84e41c93a050540a6f24814a220a8d, type: 3}
+--- !u!1001 &860487911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -146
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -174.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205703554398440394, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558803765206759041, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+      propertyPath: m_Name
+      value: CardPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
 --- !u!1 &956630009
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,41 +903,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anaKartHavuzu:
-  - Isim: Card 1
-    Gorsel: {fileID: -4621059489706583359, guid: 57d32377912858a4d841fdaa7ef5fcd8, type: 3}
-    NadirlikSeviyesi: 0
-    Atk: 6
-    Savunma: 5
-    OzelGuc: 0
-    OzelGucDegeri: 0
-  - Isim: Card 2
-    Gorsel: {fileID: 9110155031604091991, guid: 42aa3ccb43d1f7746ab4bd61d8c71f4b, type: 3}
-    NadirlikSeviyesi: 1
-    Atk: 2
-    Savunma: 9
-    OzelGuc: 0
-    OzelGucDegeri: 0
-  - Isim: Card 3
-    Gorsel: {fileID: -3989360918954827795, guid: 6b712277bd1ee1d4c8e275dde0372596, type: 3}
-    NadirlikSeviyesi: 1
-    Atk: 3
-    Savunma: 8
-    OzelGuc: 0
-    OzelGucDegeri: 0
-  - Isim: Card 4
-    Gorsel: {fileID: 5691683872486096443, guid: 06af41e0b6b1fd643bcf394b4a70eb2e, type: 3}
-    NadirlikSeviyesi: 1
-    Atk: 1
-    Savunma: 10
-    OzelGuc: 1
-    OzelGucDegeri: 10
-  - Isim: Card 5
-    Gorsel: {fileID: 3074586358259929482, guid: e38874900eecb1c4fb105512d178426b, type: 3}
-    NadirlikSeviyesi: 2
-    Atk: 8
-    Savunma: 7
-    OzelGuc: 0
-    OzelGucDegeri: 0
+  - {fileID: 1883864294}
+  - {fileID: 1883864294}
+  - {fileID: 1883864294}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1042404566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,22 +926,8 @@ MonoBehaviour:
   aiEli: []
   oyuncuCan: 30
   aiCan: 30
-  oyuncuOynananKart:
-    Isim: 
-    Gorsel: {fileID: 0}
-    NadirlikSeviyesi: 0
-    Atk: 0
-    Savunma: 0
-    OzelGuc: 0
-    OzelGucDegeri: 0
-  aiOynananKart:
-    Isim: 
-    Gorsel: {fileID: 0}
-    NadirlikSeviyesi: 0
-    Atk: 0
-    Savunma: 0
-    OzelGuc: 0
-    OzelGucDegeri: 0
+  oyuncuOynananKart: {fileID: 0}
+  aiOynananKart: {fileID: 0}
   mevcutDurum: 0
   turSuresi: 20
   oyuncuCanText: {fileID: 0}
@@ -1297,6 +1350,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1883864294 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6761878719161346190, guid: eae3e8ed21e04a341b7f8db5781d9fe6, type: 3}
+  m_PrefabInstance: {fileID: 860487911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27fee1d2a0719774d90228f03462c257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1885653114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,3 +2060,4 @@ SceneRoots:
   - {fileID: 2136573937}
   - {fileID: 851962985}
   - {fileID: 1587797487}
+  - {fileID: 860487911}

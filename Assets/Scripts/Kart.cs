@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Kart
+public class Kart : MonoBehaviour
 {
     public string Isim;
     public Sprite Gorsel; // <-- YENİ: Kartın görselini tutacak alan.
