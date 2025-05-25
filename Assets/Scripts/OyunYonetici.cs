@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class OyunYonetici : MonoBehaviour
 {
@@ -366,6 +367,7 @@ public class OyunYonetici : MonoBehaviour
             {
                 kartUI.KartBilgileriniAyarla(oyuncuEli[i], i, this);
                 kartUI.SetInteractable(mevcutDurum == OyunDurumu.OyuncuSirasi);
+                kartUI.oyuncuElindeMi = true;
             }
             else
             {

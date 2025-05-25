@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections;
 
-public class KartUI : MonoBehaviour, IPointerClickHandler
+public class KartUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI Elemanları")]
     public TextMeshProUGUI isimText;
@@ -19,6 +20,10 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
     private OyunYonetici _oyunYonetici;
     private bool _secimModu = false;
     private bool _interactable = true;
+    public bool oyuncuElindeMi = false;
+    private Coroutine scaleCoroutine;
+
+    public Animator animator; // Inspector’dan atayacaksın
 
     void Awake()
     {
@@ -119,5 +124,36 @@ public class KartUI : MonoBehaviour, IPointerClickHandler
         {
             _oyunYonetici.OyuncuKartOyna(_index);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (oyuncuElindeMi)
+        {
+            if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+            scaleCoroutine = StartCoroutine(ScaleTo(Vector3.one * 1.1f, 0.2f));
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (oyuncuElindeMi)
+        {
+            if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+            scaleCoroutine = StartCoroutine(ScaleTo(Vector3.one, 0.2f));
+        }
+    }
+
+    private IEnumerator ScaleTo(Vector3 target, float duration)
+    {
+        Vector3 initial = transform.localScale;
+        float time = 0f;
+        while (time < duration)
+        {
+            transform.localScale = Vector3.Lerp(initial, target, time / duration);
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        transform.localScale = target;
     }
 }
