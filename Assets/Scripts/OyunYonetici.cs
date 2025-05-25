@@ -377,21 +377,41 @@ public class OyunYonetici : MonoBehaviour
 
     void UpdateSavasAlaniUI()
     {
-        if (oyuncuOynananKart != null)
+        if (oyuncuSavasSlotu != null)
         {
-            oyuncuSavasSlotu.gameObject.SetActive(true);
-            oyuncuSavasSlotu.KartBilgileriniAyarla(oyuncuOynananKart, -1, this);
-            oyuncuSavasSlotu.SetInteractable(false);
+            if (oyuncuOynananKart != null)
+            {
+                oyuncuSavasSlotu.gameObject.SetActive(true);
+                oyuncuSavasSlotu.KartBilgileriniAyarla(oyuncuOynananKart, -1, this);
+                oyuncuSavasSlotu.SetInteractable(false);
+            }
+            else 
+            { 
+                oyuncuSavasSlotu.gameObject.SetActive(false); 
+            }
         }
-        else { oyuncuSavasSlotu.gameObject.SetActive(false); }
+        else
+        {
+            Debug.LogError("oyuncuSavasSlotu is not assigned!");
+        }
 
-        if (aiOynananKart != null)
+        if (aiSavasSlotu != null)
         {
-            aiSavasSlotu.gameObject.SetActive(true);
-            aiSavasSlotu.KartBilgileriniAyarla(aiOynananKart, -1, this);
-            aiSavasSlotu.SetInteractable(false);
+            if (aiOynananKart != null)
+            {
+                aiSavasSlotu.gameObject.SetActive(true);
+                aiSavasSlotu.KartBilgileriniAyarla(aiOynananKart, -1, this);
+                aiSavasSlotu.SetInteractable(false);
+            }
+            else 
+            { 
+                aiSavasSlotu.gameObject.SetActive(false); 
+            }
         }
-       // else { aiSavasSlotu.gameObject.SetActive(false); }
+        else
+        {
+            Debug.LogError("aiSavasSlotu is not assigned!");
+        }
     }
 
     void UpdateTurUI()

@@ -1,31 +1,25 @@
 // Kart.cs
 using UnityEngine;
 
-[System.Serializable]
-public class Kart : MonoBehaviour
+[CreateAssetMenu(fileName = "New Card", menuName = "Cards/Card")]
+public class Kart : ScriptableObject
 {
     public string Isim;
-    public Sprite Gorsel; // <-- YENİ: Kartın görselini tutacak alan.
+    public Sprite Gorsel;
     public Nadirlik NadirlikSeviyesi;
     public int Atk;
     public int Savunma;
     public OzelGucTipi OzelGuc;
     public int OzelGucDegeri;
 
-    // Yapıcı Metot (Constructor) - Sprite eklendi.
-    // Sprite null olabilir, çünkü Inspector'dan atama yapacağız.
-    public Kart(string isim, Sprite gorsel, Nadirlik nadirlik, int atk, int savunma, OzelGucTipi guc = OzelGucTipi.Yok, int gucDegeri = 0)
+    public bool IsValid()
     {
-        this.Isim = isim;
-        this.Gorsel = gorsel; // <-- YENİ
-        this.NadirlikSeviyesi = nadirlik;
-        this.Atk = atk;
-        this.Savunma = savunma;
-        this.OzelGuc = guc;
-        this.OzelGucDegeri = gucDegeri;
+        return !string.IsNullOrEmpty(Isim) && 
+               Gorsel != null && 
+               Atk >= 0 && 
+               Savunma >= 0;
     }
 
-    // ToString() metodunu değiştirmeye gerek yok, ama isterseniz görsel adını ekleyebilirsiniz.
     public override string ToString()
     {
         string gucStr = (OzelGuc != OzelGucTipi.Yok) ? $" GÜÇ:{OzelGuc}({OzelGucDegeri})" : "";
